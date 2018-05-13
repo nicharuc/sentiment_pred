@@ -100,7 +100,7 @@ if __name__ == '__main__':
     lin_svm.fit(X_train, y_train)
     nb = GaussianNB()
     nb.fit(X_train, y_train)
-    logisticRegr = LogisticRegression(C=1.2)
+    logisticRegr = LogisticRegression(C=0.1)
     logisticRegr.fit(X_train, y_train)
     # Output accuracy
     print('SVM Accuracy: ', lin_svm.score(X_test, y_test))
