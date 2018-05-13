@@ -8,7 +8,7 @@ python sentiment_pred.py
 The jupyter notebook, sentiment_pred.ipynb also contains the same code, with some additional hyperparamter tuning steps and keyword analysis.
 
 Steps taken:
-1. We read in the file via read_file function that automatically generates tokenized list of reviews
+1. We read in the file via read_file function that automatically generates tokenized list of reviews. We do not need to stem or lemmatize these because word embeddings will naturally capture similarity between the same word in different tenses.
 2. We split both positive and negative sets into training (80%) and test set (20%).
 3. To train the Word2Vec embeddings, we combine both positive, negative, and unsupervised list of tokenized reviews into gensim's Word2Vec model. We run 10 iterations, with each iterations' learning rate decreasing to help algorithm better converge. We ignore words that have frequency less than 5 (via min_count) because these are not substantial.
 4. We check whether the embeddings make sense:
@@ -41,12 +41,13 @@ w2v.most_similar('typical')
  ```
  These do make sense, so we proceed to the next steps.
  5. For each review, we iterate through each word, get its embedding from Word2Vec, and get an average of the embeddings of all the words in each individual review. This average will be the X features fed into the model.
- 6. We use various models, such as Support Vector Machine, Naive Bayes, Logistics Regression to perform classification and evaluate which model gives the best accuracy on the test set. Some tuning on the learning rate is done on the Logistics Regression model.
+ 6. We use various models, such as Support Vector Machine, Naive Bayes, Logistics Regression to perform classification and evaluate which model gives the best accuracy on the test set. Some tuning on the learning rate is done on the Logistics Regression model. Accuracy is a valid metric because there is no issue of class imbalance in this case.
  - SVM accuracy: 0.850
  - Naive Bayes accuracy: 0.725
  - Logistics Regression Accuracy: 0.852
  
  7. Keywords Analysis
+ 
  We use fitted Logistics Regression (since this is the best model in terms of accuracy) to predict each word's embeddings to get the likelihood of the word pointing to positive sentiment or negative sentiment.
  
  For words that are predicted to be 100% probability of being positive, we weigh the size of the term in the word cloud by frequency of its occurence across reviews as frequency is an indicator of importance:
@@ -60,3 +61,8 @@ w2v.most_similar('typical')
 ![alt text](https://github.com/nicharuc/sentiment_pred_scopeai/blob/master/neg_img.png)
 
 We can see that keywords with embeddings that point out to negative sentiment are those that tend to show how the film failed to evoke a clear interest or profound emotions.
+
+Further steps:
+- We can try weighing embeddings by TF-IDF weights to give more importance to words that are more representative of that particular review.
+- We can try other models such as neural networks. We would need to see if increasing complexity of the model by a lot actually translates to significant improvements as simple Logistics Regression model also performs quite well.
+- We can analyze misclassified reviews and see if there is a trend in reviews that are misclassified. 
