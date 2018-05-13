@@ -66,5 +66,5 @@ We can see that keywords with embeddings that point out to negative sentiment ar
 
 Further steps:
 - We can try weighing embeddings by TF-IDF weights to give more importance to words that are more representative of that particular review.
-- We can try other models such as neural networks. We would need to see if increasing complexity of the model by a lot actually translates to significant improvements as simple Logistics Regression model also performs quite well.
+- We can try other models such as neural networks. We would need to see if increasing complexity of the model by a lot actually translates to significant improvements as simple Logistics Regression model already performs quite well.
 - We can analyze misclassified reviews and see if there is a trend in reviews that are misclassified. 
