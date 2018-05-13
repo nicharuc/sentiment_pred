@@ -42,9 +42,12 @@ w2v.most_similar('typical')
  These do make sense, so we proceed to the next steps.
  5. For each review, we iterate through each word, get its embedding from Word2Vec, and get an average of the embeddings of all the words in each individual review. This average will be the X features fed into the model.
  6. We use various models, such as Support Vector Machine, Naive Bayes, Logistics Regression to perform classification and evaluate which model gives the best accuracy on the test set. Some tuning on the learning rate is done on the Logistics Regression model.
- - 
+ - SVM accuracy: 0.850
+ - Naive Bayes accuracy: 0.725
+ - Logistics Regression Accuracy: 0.852
+ 
  7. Keywords Analysis
- We use fitted Logistics Regression to predict each word's embeddings to get the likelihood of the word pointing to positive sentiment or negative sentiment.
+ We use fitted Logistics Regression (since this is the best model in terms of accuracy) to predict each word's embeddings to get the likelihood of the word pointing to positive sentiment or negative sentiment.
  
  For words that are predicted to be 100% probability of being positive, we weigh the size of the term in the word cloud by frequency of its occurence across reviews as frequency is an indicator of importance:
  
